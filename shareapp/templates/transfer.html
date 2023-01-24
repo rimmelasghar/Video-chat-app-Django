@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload files</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <!-- CSS only -->
+    {% comment %} <link rel="stylesheet" href="{% static 'css/transfer.css' %}"> {% endcomment %}
+    <style> @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); </style>
+<style>
+  body{
+    background-image: url(https://img.freepik.com/premium-vector/3d-wavy-fluorescent-sphere-arounded-ring-balls-abstract-shapes-with-thin-film-effect_173207-1391.jpg?w=5000);
+    background-repeat: no-repeat;
+
+    background-size:100%;
+
+}
+.mainh{
+    color:black;
+    font-family: 'VT323', monospace;
+    font-size:70px;
+    text-align: left;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+.sech{
+  color:black;
+  font-family: 'VT323', monospace;
+  font-size:20px;
+  text-align: left;
+  margin-left: 40px;
+}
+
+.Uploader{
+    width: 200px;
+    height: 400px;
+    margin: 10px;
+    padding: 10px;
+}
+.upperL img{
+    width: 60px;
+    height: auto;
+    float: left;
+}
+#ctrl{
+    display: none;
+}
+#Folder {
+display: none;
+}
+.custom-file-upload {
+border: none;
+display: inline-block;
+padding: 6px 1px;
+cursor: pointer;
+color: rgb(78, 78, 78);
+
+}
+.custom-file-upload p:hover{
+    color: rgb(0, 0, 0);
+    transition: 0.6s;
+
+}
+
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    
+</head>
+<body>
+    <h1 class="mainh">Share.io</h1>
+    <label class="sech">Share Anything,Anywhere,Anytime.</label>
+
+    <div class="row row-cols-1 row-cols-md-4 mb-3 text-center mt-5 m-3 d-flex justify-content-center">
+
+        <div class="col">
+          <div class="card mb-4 rounded-4 shadow-lg">
+            <div class="card-header py-3 overflow-auto" class="input-group mb-3">
+                <img src="https://img.icons8.com/clouds/100/000000/plus.png"/>
+              <div class="input-group mb-3">
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <input type="file" name="file" class="form-control" id="inputGroupFile01" required>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-group-flush mt-2 mb-3 p-1">
+                <input type="text" class="form-control mb-2" placeholder="Email to" aria-label="Username">
+                <input type="text" class="form-control mb-2" placeholder="Your Email" aria-label="Username">
+                <input type="text" class="form-control mb-2" placeholder="Title" aria-label="Username">
+                <input type="text" class="form-control mb-2" placeholder="Message" aria-label="Username">
+              </ul>
+              <button type="submit" class="w-50 btn btn-md btn-outline-primary rounded-5">Transfer</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </form>
+
+        
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>

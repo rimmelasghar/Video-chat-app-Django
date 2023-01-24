@@ -1,0 +1,327 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" href="">
+    </head>
+    <style>
+        * {
+            box-sizing: border-box;
+          }
+          
+          body {
+            background-color: #edeff2;
+            font-family: "Calibri", "Roboto", sans-serif;
+          }
+          
+          .chat_window {
+            position: absolute;
+            width: calc(100% - 20px);
+            max-width: 800px;
+            height: 500px;
+            border-radius: 10px;
+            background-color: #fff;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            background-color: #f8f8f8;
+            overflow: hidden;
+          }
+          
+          .top_menu {
+            background-color: #fff;
+            width: 100%;
+            padding: 20px 0 15px;
+            box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+          }
+          .top_menu .buttons {
+            margin: 3px 0 0 20px;
+            position: absolute;
+          }
+          .top_menu .buttons .button {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+          }
+          .top_menu .buttons .button.close {
+            background-color: #f5886e;
+          }
+          .top_menu .buttons .button.minimize {
+            background-color: #fdbf68;
+          }
+          .top_menu .buttons .button.maximize {
+            background-color: #a3d063;
+          }
+          .top_menu .title {
+            text-align: center;
+            color: #bcbdc0;
+            font-size: 20px;
+          }
+          
+          .messages {
+            position: relative;
+            list-style: none;
+            padding: 20px 10px 0 10px;
+            margin: 0;
+            height: 347px;
+            overflow: scroll;
+          }
+          .messages .message {
+            clear: both;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: all 0.5s linear;
+            opacity: 0;
+          }
+          .messages .message.left .avatar {
+            background-color: #f5886e;
+            float: left;
+          }
+          .messages .message.left .text_wrapper {
+            background-color: #ffe6cb;
+            margin-left: 20px;
+          }
+          .messages .message.left .text_wrapper::after, .messages .message.left .text_wrapper::before {
+            right: 100%;
+            border-right-color: #ffe6cb;
+          }
+          .messages .message.left .text {
+            color: #c48843;
+          }
+          .messages .message.right .avatar {
+            background-color: #fdbf68;
+            float: right;
+          }
+          .messages .message.right .text_wrapper {
+            background-color: #c7eafc;
+            margin-right: 20px;
+            float: right;
+          }
+          .messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
+            left: 100%;
+            border-left-color: #c7eafc;
+          }
+          .messages .message.right .text {
+            color: #45829b;
+          }
+          .messages .message.appeared {
+            opacity: 1;
+          }
+          .messages .message .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+          }
+          .messages .message .text_wrapper {
+            display: inline-block;
+            padding: 20px;
+            border-radius: 6px;
+            width: calc(100% - 85px);
+            min-width: 100px;
+            position: relative;
+          }
+          .messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
+            top: 18px;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+          }
+          .messages .message .text_wrapper::after {
+            border-width: 13px;
+            margin-top: 0px;
+          }
+          .messages .message .text_wrapper::before {
+            border-width: 15px;
+            margin-top: -2px;
+          }
+          .messages .message .text_wrapper .text {
+            font-size: 18px;
+            font-weight: 300;
+          }
+          
+          .bottom_wrapper {
+            position: relative;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px 20px;
+            position: absolute;
+            bottom: 0;
+          }
+          .bottom_wrapper .message_input_wrapper {
+            display: inline-block;
+            height: 50px;
+            border-radius: 25px;
+            border: 1px solid #bcbdc0;
+            width: calc(100% - 160px);
+            position: relative;
+            padding: 0 20px;
+          }
+          .bottom_wrapper .message_input_wrapper .message_input {
+            border: none;
+            height: 100%;
+            box-sizing: border-box;
+            width: calc(100% - 40px);
+            position: absolute;
+            outline-width: 0;
+            color: gray;
+          }
+          .bottom_wrapper .send_message {
+            width: 140px;
+            height: 50px;
+            display: inline-block;
+            border-radius: 50px;
+            background-color: #a3d063;
+            border: 2px solid #a3d063;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s linear;
+            text-align: center;
+            
+        }
+          .bottom_wrapper .send_message:hover {
+            color: #a3d063;
+            background-color: #fff;
+          }
+          .bottom_wrapper .send_message .text {
+            font-size: 18px;
+            font-weight: 300;
+            display: inline-block;
+            line-height: 48px;
+          }
+          
+          .message_template {
+            display: none;
+          }
+          .send{
+            padding: 0; /* Remove padding */
+            border: none; /* Remove border */
+            background-color: transparent; /* Make the button transparent */
+          }
+          .input-image {
+            width: 30px; /* Set the width of the image */
+            height: 30px; /* Set the height of the image */
+            vertical-align: middle; /* Center the image vertically within the button */
+          }
+
+
+    </style>
+    <body>
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <span class="navbar-text">
+            Chat Application
+          </span>
+        </div class="d-flex">
+          <!-- <form class="d-flex" method="POST"> -->
+            {% csrf_token %}
+        </div>
+      </nav>
+      <div class="container">
+        <div class="chat_window">
+            <div class="top_menu">
+              <div class="buttons">
+                <div class="button close"></div>
+                <div class="button minimize"></div>
+                <div class="button maximize"></div>
+              </div>
+              <div class="title">Messages</div>
+            </div>
+            <ul class="messages">
+                
+
+            </ul>
+            
+            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                  alt="avatar 3" style="width: 40px; height: 100%;">
+                <input type="text" class="form-control form-control-lg" id="chat-message-input"
+                  placeholder="Type message">
+                  <button id="chat-message-submit" class="send"><img class="input-image" src="{% static 'img/send.png' %}" alt="button image"></button>
+                <button class="send"><a href="/home" target="_blank"><img class="input-image" src="{% static 'img/attach.png' %}" alt="button image"></a></button>
+                {{ room_name|json_script:"room-name" }}
+              </div>
+            </div>
+
+
+      </div>
+    </div>
+          <div class="message_template">
+            <li class="message">
+              <div class="avatar">
+                
+              </div>
+              <div class="text_wrapper"><div class="text"></div></div>
+            </li>
+          </div>
+          </div>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+  
+  <script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const x = localStorage.getItem("username");
+        console.log(x);
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        if( typeof data.user_name !== 'undefined' && data.user_name == x) {
+            $( 'ul.messages' ).append('<li class="message right appeared"><div class="d-flex flex-row justify-content-end mb-4 pt-1"><div><div class="small p-2 me-3 mb-1 rounded-3">You</div><p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">'+data.message+'</p><p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">'+time+'</p></div><img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;"></div></li>' )
+          }
+          else if(typeof data.user_name !== 'undefined'){
+            $( 'ul.messages' ).append('<li class="message left appeared"><div class="d-flex flex-row justify-content-start"><img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;"><div><div class="small p-2 ms-3 mb-1 rounded-3">'+data.user_name+'</div><p class="small p-2 ms-3 mb-1 rounded-3 text-white" style="background-color: #060607;">'+data.message+'</p><p class="small ms-3 mb-3 rounded-3 text-muted">'+time+'</p></div></div></li>')
+          }
+        //document.querySelector('#chat-log').value += (data.message + '\n');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        const user_name = localStorage.getItem("username");
+        chatSocket.send(JSON.stringify({
+            'user_name' : user_name,
+            'message': message
+        }));
+        // change
+        messageInputDom.value = '';
+    };
+</script>      
+    </body>
+</html>
