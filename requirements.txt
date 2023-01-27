@@ -1,5 +1,6 @@
 asgiref==3.6.0
 async-generator==1.10
+agora-token-builder==1.0.0
 async-timeout==4.0.2
 attrs==22.2.0
 autobahn==22.12.1
@@ -47,6 +48,7 @@ Twisted==22.10.0
 twisted-iocpsupport==1.0.2
 txaio==22.2.1
 typing_extensions==4.4.0
+tzdata==2021.5
 urllib3==1.26.14
 wsproto==1.2.0
 zope.interface==5.5.2

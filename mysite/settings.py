@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'channels',
     'daphne',
     'chat',
+    'base',
     'shareapp',
     'django.contrib.admin',
     'django.contrib.auth',
