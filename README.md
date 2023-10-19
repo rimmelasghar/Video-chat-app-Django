@@ -59,6 +59,12 @@ create an App, copy the App id and App certificate from there and Paste it in th
 /base/static/js/stream.js
 
 After placing App id and App certificate you're ready to go.
+# App Demo
+### Login Screen:
+<img src="https://github.com/rimmelasghar/Video-chat-app-Django/blob/master/App%20Images/img1.PNG">
+### Meeting Room Screen
+<img src="https://github.com/rimmelasghar/Video-chat-app-Django/blob/master/App%20Images/img2.PNG">
+
 # Working:
 Thats it! You are ready to go. </br>
 This project uses Redis channel as a channel Layer.
